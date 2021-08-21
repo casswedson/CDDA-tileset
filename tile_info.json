@@ -1,11 +1,11 @@
 [
   {
-    "pixelscale": 1,
-    "height": 32,
-    "width": 32
-  },
+"pixelscale": 1,
+"height": 32,
+"width": 32
+ },
   {
-    "backdrop.png": {  }
+ "backdrop.png": {  }
   },
   {
     "ui.png": {  }
