@@ -31,7 +31,7 @@ jobs:
           echo "::set-output name=release_name::Cuteclysm Release ${{ steps.get-timestamp.outputs.time }}"
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 100
+          fetch-depth: 0
       - name: Check if there is existing git tag
         id: tag_check
         uses: mukunku/tag-exists-action@v1.0.0
