@@ -23,7 +23,7 @@ jobs:
         id: get-timestamp
         uses: nanzm/get-time-action@v1.1
         with:
-          format: 'YYYY-MM-DD'
+          format: 'YYYY-MM-DD-HHmm'
       - name: Generate environmental variables
         id: generate_env_vars
         run: |
@@ -50,6 +50,12 @@ jobs:
       - name: Get Previous tag
         id: previous_tag
         uses: WyriHaximus/github-action-get-previous-tag@v1
+      - name: Abort if there are no changes
+        run: |
+          git remote add upstream https://github.com/pixel-32/CDDA-tileset.git
+          git fetch --depth=1 upstream ${{strps.previous_tag.outputs.tag}}
+          # exit 1 if there are no changes, exit 0 if there are changes
+          git diff upstream/master | grep ""
       - name: Create release
         id: create_release
         uses: actions/create-release@main
@@ -81,25 +87,24 @@ jobs:
       - name: Build
         id: build
         run: |
-          echo ::set-output name=release_name::$release_name
+          mkdir build
 
           wget -q -P build https://raw.githubusercontent.com/CleverRaven/Cataclysm-DDA/master/tools/gfx_tools/compose.py \
           || echo "Error: Failed to get compose.py"
-          mkdir build
 
           python3 build/compose.py --use-all --feedback CONCISE --loglevel INFO . build
 
           artifact_name=Cuteclysm
 
-          mkdir "$artifact_name"
-          mv build/*.png            "$artifact_name"
-          mv build/tile_config.json "$artifact_name"
-          mv ./tileset.txt          "$artifact_name"
-          mv ./fallback.png         "$artifact_name"
+          mkdir "$release_name"
+          cp build/*.png            "$release_name"
+          cp build/tile_config.json "$release_name"
+          cp ./tileset.txt          "$release_name"
+          cp ./fallback.png         "$release_name"
 
           zip -r $release_name.zip $release_name
 
-          echo ::set-output name=artifact_name::"$artifact_name"
+          echo ::set-output name=artifact_name::"$release_name"
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
         env:
