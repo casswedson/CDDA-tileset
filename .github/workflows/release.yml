@@ -5,8 +5,11 @@
 name: Publish Release
 concurrency: release
 on:
-  schedule:
-    - cron: '0 12 * * sun'
+  push:
+    branches:
+      - master
+  # schedule:
+  #   - cron: '0 12 * * sun'
 
 jobs:
   release:
