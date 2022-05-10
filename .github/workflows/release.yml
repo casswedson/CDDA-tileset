@@ -54,7 +54,7 @@ jobs:
       - name: Abort if there are no changes
         run: |
           # exit 1 if there are no changes, exit 0 if there are changes
-          git diff ${{steps.previous_tag.output.tag}} ${{ steps.generate_env_vars.outputs.tag_name }} | grep ""
+          git diff ${{ steps.previous_tag.outputs.tag }} ${{ steps.generate_env_vars.outputs.tag_name }} | grep ""
       - name: Create release
         id: create_release
         uses: actions/create-release@main
