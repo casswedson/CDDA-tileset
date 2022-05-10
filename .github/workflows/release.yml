@@ -95,7 +95,7 @@ jobs:
 
           python3 build/compose.py --use-all --feedback CONCISE --loglevel INFO . build
 
-          artifact_name=Cuteclysm
+          release_name=Cuteclysm
 
           mkdir "$release_name"
           cp build/*.png            "$release_name"
