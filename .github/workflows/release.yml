@@ -25,7 +25,7 @@ jobs:
         id: get-timestamp
         uses: nanzm/get-time-action@v1.1
         with:
-          format: 'YYYY-MM-DD'
+          format: 'YYYY-MM-DD-MMmm'
       - name: Generate environmental variables
         id: generate_env_vars
         run: |
